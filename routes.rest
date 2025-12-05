@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:8080
+
+### Get all recipes
+GET {{baseUrl}}/recipes
+
+### Create recipe
+POST {{baseUrl}}/recipes
+Content-Type: application/json
+
+{
+  "title": "Roasted Veggie Pasta",
+  "cuisine": "Italian",
+  "summary": "Weeknight-friendly dinner packed with veggies.",
+  "prepTimeMinutes": 15,
+  "cookTimeMinutes": 25,
+  "servings": 4,
+  "ingredients": [
+    { "name": "Penne", "quantity": 12, "unit": "oz" },
+    { "name": "Cherry tomatoes", "quantity": 2, "unit": "cups" },
+    { "name": "Zucchini", "quantity": 1, "unit": "medium" }
+  ],
+  "steps": ["Cook pasta", "Roast vegetables", "Combine with sauce"],
+  "tags": ["vegetarian"],
+  "nutrition": { "calories": 520, "protein": 19, "carbs": 68, "fat": 18 },
+  "author": "E"
+}
