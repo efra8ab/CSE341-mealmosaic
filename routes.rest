@@ -24,3 +24,26 @@ Content-Type: application/json
   "nutrition": { "calories": 520, "protein": 19, "carbs": 68, "fat": 18 },
   "author": "E"
 }
+
+### Get all meal plans
+GET {{baseUrl}}/meal-plans
+
+### Create meal plan (update recipe id after creation)
+POST {{baseUrl}}/meal-plans
+Content-Type: application/json
+
+{
+  "title": "Sample Week",
+  "user": "REPLACE_WITH_USER_ID",
+  "startDate": "2024-04-01",
+  "endDate": "2024-04-05",
+  "entries": [
+    {
+      "date": "2024-04-01",
+      "mealType": "dinner",
+      "recipe": "REPLACE_WITH_RECIPE_ID",
+      "notes": "Serve with salad"
+    }
+  ],
+  "notes": "Auto-generated sample"
+}

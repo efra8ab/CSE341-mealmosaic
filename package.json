@@ -1,7 +1,7 @@
 {
   "name": "cse341-mealmosaic",
   "version": "1.0.0",
-  "description": "Meal Mosaic API (Final Project Part 1) - recipes CRUD with Swagger docs",
+  "description": "Meal Mosaic API (Final Project Part 1) - recipes and meal plans CRUD with Swagger docs",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

@@ -4,6 +4,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger-output.json');
 const { connectDb } = require('./db/connect');
 const recipesRoute = require('./routes/recipesRoute');
+const mealPlansRoute = require('./routes/mealPlansRoute');
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -37,6 +38,7 @@ app.use((req, res, next) => {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/recipes', recipesRoute);
+app.use('/meal-plans', mealPlansRoute);
 
 app.get('/', (req, res) => {
   res.send('Meal Mosaic API');

@@ -6,7 +6,7 @@ const port = process.env.PORT || 8080;
 const doc = {
   info: {
     title: 'Meal Mosaic API',
-    description: 'CRUD API for recipes (Final Project Part 1, CSE341)',
+    description: 'CRUD API for recipes and meal plans (Final Project Part 1, CSE341)',
   },
   host: process.env.SWAGGER_HOST || `localhost:${port}`,
   basePath: '/',
@@ -47,6 +47,42 @@ const doc = {
       tags: ['dairy-free'],
       nutrition: { calories: 410, protein: 14, carbs: 42, fat: 20 },
       author: 'Nora',
+    },
+    MealPlan: {
+      _id: '6620bd5ac0ab123456789acd',
+      title: 'Weeknight Fuel-Up',
+      user: '661fa2d2c0ab123456789999',
+      startDate: '2024-04-01T00:00:00.000Z',
+      endDate: '2024-04-07T00:00:00.000Z',
+      entries: [
+        {
+          date: '2024-04-01',
+          mealType: 'dinner',
+          recipe: '6620bcdbc0ab123456789abc',
+          notes: 'Serve with naan',
+        },
+        {
+          date: '2024-04-02',
+          mealType: 'lunch',
+          recipe: '6620bcdbc0ab123456789abc',
+          notes: 'Pack leftovers',
+        },
+      ],
+      notes: 'Focus on fiber this week.',
+    },
+    NewMealPlan: {
+      title: 'Plant-Based Week',
+      startDate: '2024-04-08',
+      endDate: '2024-04-12',
+      entries: [
+        {
+          date: '2024-04-08',
+          mealType: 'breakfast',
+          recipe: '6620bcdbc0ab123456789abc',
+          notes: 'Add fresh berries on top',
+        },
+      ],
+      notes: 'Prep smoothies the night before.',
     },
   },
 };

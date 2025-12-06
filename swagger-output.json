@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Meal Mosaic API",
-    "description": "CRUD API for recipes (Final Project Part 1, CSE341)",
+    "description": "CRUD API for recipes and meal plans (Final Project Part 1, CSE341)",
     "version": "1.0.0"
   },
   "host": "localhost:8080",
@@ -177,6 +177,169 @@
         "responses": {
           "204": {
             "description": "Recipe removed successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/meal-plans/": {
+      "get": {
+        "tags": [
+          "Meal Plans"
+        ],
+        "summary": "Retrieve all meal plans",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Meal plans",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/MealPlan"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Meal Plans"
+        ],
+        "summary": "Create a new meal plan",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewMealPlan"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The created meal plan",
+            "schema": {
+              "$ref": "#/definitions/MealPlan"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/meal-plans/{id}": {
+      "get": {
+        "tags": [
+          "Meal Plans"
+        ],
+        "summary": "Retrieve a single meal plan",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the meal plan"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Meal plan that matches the provided id",
+            "schema": {
+              "$ref": "#/definitions/MealPlan"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Meal Plans"
+        ],
+        "summary": "Update a meal plan",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the meal plan"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewMealPlan"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated meal plan",
+            "schema": {
+              "$ref": "#/definitions/MealPlan"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Meal Plans"
+        ],
+        "summary": "Delete a meal plan",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the meal plan"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Meal plan removed successfully"
           },
           "400": {
             "description": "Bad Request"
@@ -378,6 +541,104 @@
         "author": {
           "type": "string",
           "example": "Nora"
+        }
+      }
+    },
+    "MealPlan": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "6620bd5ac0ab123456789acd"
+        },
+        "title": {
+          "type": "string",
+          "example": "Weeknight Fuel-Up"
+        },
+        "user": {
+          "type": "string",
+          "example": "661fa2d2c0ab123456789999"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2024-04-01T00:00:00.000Z"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2024-04-07T00:00:00.000Z"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "example": "2024-04-02"
+              },
+              "mealType": {
+                "type": "string",
+                "example": "lunch"
+              },
+              "recipe": {
+                "type": "string",
+                "example": "6620bcdbc0ab123456789abc"
+              },
+              "notes": {
+                "type": "string",
+                "example": "Pack leftovers"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "string",
+          "example": "Focus on fiber this week."
+        }
+      }
+    },
+    "NewMealPlan": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Plant-Based Week"
+        },
+        "startDate": {
+          "type": "string",
+          "example": "2024-04-08"
+        },
+        "endDate": {
+          "type": "string",
+          "example": "2024-04-12"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "date": {
+                "type": "string",
+                "example": "2024-04-08"
+              },
+              "mealType": {
+                "type": "string",
+                "example": "breakfast"
+              },
+              "recipe": {
+                "type": "string",
+                "example": "6620bcdbc0ab123456789abc"
+              },
+              "notes": {
+                "type": "string",
+                "example": "Add fresh berries on top"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "string",
+          "example": "Prep smoothies the night before."
         }
       }
     }
