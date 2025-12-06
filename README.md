@@ -1,4 +1,4 @@
-# Meal Mosaic API 
+# Meal Mosaic API (Week 05)
 
 Recipes + Meal Plans CRUD with Express, MongoDB, and Swagger docs at `/api-docs`.
 
@@ -7,9 +7,10 @@ Recipes + Meal Plans CRUD with Express, MongoDB, and Swagger docs at `/api-docs`
 2. Generate docs: `npm run swagger`
 3. Run dev server: `npm run dev` (or `npm start`). Swagger UI: `http://localhost:8080/api-docs`
 
-## Delivered
+## Delivered (Week 05)
 - **Recipes**: GET all/one (public), POST/PUT/DELETE. Validates required fields, ingredient names, steps, and positive times/servings.
 - **Meal Plans**: GET all/one (public), POST/PUT/DELETE. Validates dates, meal entries, and referenced recipes exist; requires a user id field (no auth yet).
+- Seed data: import `data/recipes.seed.json` and `data/mealPlans.seed.json` via MongoDB Compass for sample records.
 
 ## Quicklook
 - `server.js` entrypoint and Swagger host handling for Render.
@@ -18,3 +19,4 @@ Recipes + Meal Plans CRUD with Express, MongoDB, and Swagger docs at `/api-docs`
 - `models/mealPlan.js`, `controllers/mealPlansController.js`, `routes/mealPlansRoute.js` for meal plans CRUD.
 - `swagger.js` / `swagger-output.json` generation.
 - `routes.rest` sample requests (VS Code REST Client compatible).
+- `data/*.seed.json` sample MongoDB imports.

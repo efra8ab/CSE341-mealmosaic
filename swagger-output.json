@@ -364,110 +364,19 @@
         },
         "title": {
           "type": "string",
-          "example": "Spicy Lentil Soup"
+          "example": "Tacos al Pastor"
         },
         "cuisine": {
           "type": "string",
-          "example": "Mediterranean"
+          "example": "Mexican"
         },
         "summary": {
           "type": "string",
-          "example": "Hearty plant-based soup with warm spices."
+          "example": "Marinated pork with pineapple, served on corn tortillas."
         },
         "prepTimeMinutes": {
           "type": "number",
-          "example": 20
-        },
-        "cookTimeMinutes": {
-          "type": "number",
-          "example": 35
-        },
-        "servings": {
-          "type": "number",
-          "example": 4
-        },
-        "ingredients": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string",
-                "example": "Smoked paprika"
-              },
-              "quantity": {
-                "type": "number",
-                "example": 1
-              },
-              "unit": {
-                "type": "string",
-                "example": "tsp"
-              }
-            }
-          }
-        },
-        "steps": {
-          "type": "array",
-          "example": [
-            "Rinse lentils",
-            "Sauté aromatics",
-            "Simmer until tender"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "tags": {
-          "type": "array",
-          "example": [
-            "vegetarian",
-            "gluten-free"
-          ],
-          "items": {
-            "type": "string"
-          }
-        },
-        "nutrition": {
-          "type": "object",
-          "properties": {
-            "calories": {
-              "type": "number",
-              "example": 320
-            },
-            "protein": {
-              "type": "number",
-              "example": 18
-            },
-            "carbs": {
-              "type": "number",
-              "example": 45
-            },
-            "fat": {
-              "type": "number",
-              "example": 8
-            }
-          }
-        },
-        "author": {
-          "type": "string",
-          "example": "@chef_ava"
-        }
-      }
-    },
-    "NewRecipe": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "example": "Coconut Curry Chickpeas"
-        },
-        "cuisine": {
-          "type": "string",
-          "example": "Thai"
-        },
-        "prepTimeMinutes": {
-          "type": "number",
-          "example": 15
+          "example": 30
         },
         "cookTimeMinutes": {
           "type": "number",
@@ -484,7 +393,7 @@
             "properties": {
               "name": {
                 "type": "string",
-                "example": "Red curry paste"
+                "example": "Achiote paste"
               },
               "quantity": {
                 "type": "number",
@@ -500,9 +409,9 @@
         "steps": {
           "type": "array",
           "example": [
-            "Toast curry paste",
-            "Add coconut milk",
-            "Simmer with chickpeas"
+            "Marinate pork with achiote and spices",
+            "Grill pork and pineapple",
+            "Slice and serve on tortillas"
           ],
           "items": {
             "type": "string"
@@ -511,7 +420,8 @@
         "tags": {
           "type": "array",
           "example": [
-            "dairy-free"
+            "street-food",
+            "pork"
           ],
           "items": {
             "type": "string"
@@ -522,15 +432,106 @@
           "properties": {
             "calories": {
               "type": "number",
-              "example": 410
+              "example": 480
             },
             "protein": {
               "type": "number",
-              "example": 14
+              "example": 32
             },
             "carbs": {
               "type": "number",
-              "example": 42
+              "example": 45
+            },
+            "fat": {
+              "type": "number",
+              "example": 18
+            }
+          }
+        },
+        "author": {
+          "type": "string",
+          "example": "Chef Lalo"
+        }
+      }
+    },
+    "NewRecipe": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Enchiladas Verdes"
+        },
+        "cuisine": {
+          "type": "string",
+          "example": "Mexican"
+        },
+        "prepTimeMinutes": {
+          "type": "number",
+          "example": 20
+        },
+        "cookTimeMinutes": {
+          "type": "number",
+          "example": 25
+        },
+        "servings": {
+          "type": "number",
+          "example": 5
+        },
+        "ingredients": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Salsa verde"
+              },
+              "quantity": {
+                "type": "number",
+                "example": 2
+              },
+              "unit": {
+                "type": "string",
+                "example": "cups"
+              }
+            }
+          }
+        },
+        "steps": {
+          "type": "array",
+          "example": [
+            "Warm tortillas in salsa verde",
+            "Fill with chicken and roll",
+            "Top with salsa and cheese, then bake"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "example": [
+            "baked",
+            "chicken"
+          ],
+          "items": {
+            "type": "string"
+          }
+        },
+        "nutrition": {
+          "type": "object",
+          "properties": {
+            "calories": {
+              "type": "number",
+              "example": 510
+            },
+            "protein": {
+              "type": "number",
+              "example": 32
+            },
+            "carbs": {
+              "type": "number",
+              "example": 52
             },
             "fat": {
               "type": "number",
@@ -540,7 +541,7 @@
         },
         "author": {
           "type": "string",
-          "example": "Nora"
+          "example": "Salsa Verde Co."
         }
       }
     },
@@ -553,7 +554,7 @@
         },
         "title": {
           "type": "string",
-          "example": "Weeknight Fuel-Up"
+          "example": "Taco Trio Week"
         },
         "user": {
           "type": "string",
@@ -593,7 +594,7 @@
         },
         "notes": {
           "type": "string",
-          "example": "Focus on fiber this week."
+          "example": "All tacos, all week."
         }
       }
     },
@@ -602,7 +603,7 @@
       "properties": {
         "title": {
           "type": "string",
-          "example": "Plant-Based Week"
+          "example": "Antojitos Plan"
         },
         "startDate": {
           "type": "string",
@@ -623,7 +624,7 @@
               },
               "mealType": {
                 "type": "string",
-                "example": "breakfast"
+                "example": "dinner"
               },
               "recipe": {
                 "type": "string",
@@ -631,14 +632,14 @@
               },
               "notes": {
                 "type": "string",
-                "example": "Add fresh berries on top"
+                "example": "Pair with agua fresca"
               }
             }
           }
         },
         "notes": {
           "type": "string",
-          "example": "Prep smoothies the night before."
+          "example": "Street-food themed dinners."
         }
       }
     }

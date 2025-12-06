@@ -8,21 +8,22 @@ POST {{baseUrl}}/recipes
 Content-Type: application/json
 
 {
-  "title": "Roasted Veggie Pasta",
-  "cuisine": "Italian",
-  "summary": "Weeknight-friendly dinner packed with veggies.",
-  "prepTimeMinutes": 15,
+  "title": "Enchiladas Verdes",
+  "cuisine": "Mexican",
+  "summary": "Corn tortillas rolled with shredded chicken and salsa verde.",
+  "prepTimeMinutes": 20,
   "cookTimeMinutes": 25,
-  "servings": 4,
+  "servings": 5,
   "ingredients": [
-    { "name": "Penne", "quantity": 12, "unit": "oz" },
-    { "name": "Cherry tomatoes", "quantity": 2, "unit": "cups" },
-    { "name": "Zucchini", "quantity": 1, "unit": "medium" }
+    { "name": "Corn tortillas", "quantity": 15, "unit": "pieces" },
+    { "name": "Shredded chicken", "quantity": 2, "unit": "cups" },
+    { "name": "Salsa verde", "quantity": 2, "unit": "cups" },
+    { "name": "Queso fresco", "quantity": 4, "unit": "oz" }
   ],
-  "steps": ["Cook pasta", "Roast vegetables", "Combine with sauce"],
-  "tags": ["vegetarian"],
-  "nutrition": { "calories": 520, "protein": 19, "carbs": 68, "fat": 18 },
-  "author": "E"
+  "steps": ["Warm tortillas in salsa verde", "Fill with chicken and roll", "Top with salsa and cheese, then bake"],
+  "tags": ["baked", "chicken"],
+  "nutrition": { "calories": 510, "protein": 32, "carbs": 52, "fat": 20 },
+  "author": "Salsa Verde Co."
 }
 
 ### Get all meal plans
@@ -33,17 +34,17 @@ POST {{baseUrl}}/meal-plans
 Content-Type: application/json
 
 {
-  "title": "Sample Week",
+  "title": "Taco Trio Week",
   "user": "REPLACE_WITH_USER_ID",
   "startDate": "2024-04-01",
   "endDate": "2024-04-05",
   "entries": [
     {
-      "date": "2024-04-01",
+      "date": "2024-04-02",
       "mealType": "dinner",
       "recipe": "REPLACE_WITH_RECIPE_ID",
-      "notes": "Serve with salad"
+      "notes": "Top with cilantro and onion"
     }
   ],
-  "notes": "Auto-generated sample"
+  "notes": "All tacos, all week."
 }
