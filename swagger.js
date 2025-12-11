@@ -6,13 +6,24 @@ const port = process.env.PORT || 8080;
 const doc = {
   info: {
     title: 'Meal Mosaic API',
-    description: 'CRUD API for recipes and meal plans (Final Project Part 1, CSE341)',
+    description: 'CRUD API for recipes, meal plans, users, and shopping lists with GitHub OAuth (Final Project)',
   },
   host: process.env.SWAGGER_HOST || `localhost:${port}`,
   basePath: '/',
   schemes: [process.env.SWAGGER_SCHEME || 'http'],
   consumes: ['application/json'],
   produces: ['application/json'],
+  securityDefinitions: {
+    OAuth2: {
+      type: 'oauth2',
+      flow: 'accessCode',
+      authorizationUrl: 'https://github.com/login/oauth/authorize',
+      tokenUrl: 'https://github.com/login/oauth/access_token',
+      scopes: {
+        'user:email': 'Read user email',
+      },
+    },
+  },
   definitions: {
     Recipe: {
       _id: '6620bcdbc0ab123456789abc',
@@ -50,6 +61,18 @@ const doc = {
       nutrition: { calories: 510, protein: 32, carbs: 52, fat: 20 },
       author: 'Salsa Verde Co.',
     },
+    User: {
+      _id: '661fa2d2c0ab123456789999',
+      username: 'chef-lalo',
+      email: 'lalo@example.com',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/123456?v=4',
+      githubId: '123456',
+    },
+    NewUser: {
+      username: 'chef-lalo',
+      email: 'lalo@example.com',
+      avatarUrl: 'https://avatars.githubusercontent.com/u/123456?v=4'
+    },
     MealPlan: {
       _id: '6620bd5ac0ab123456789acd',
       title: 'Taco Trio Week',
@@ -86,10 +109,37 @@ const doc = {
       ],
       notes: 'Street-food themed dinners.',
     },
+    ShoppingItem: {
+      name: 'Lime',
+      quantity: 6,
+      unit: 'pieces',
+      checked: false,
+    },
+    ShoppingList: {
+      _id: '6630bd5ac0ab123456789ace',
+      title: 'Taco Night Prep',
+      user: '661fa2d2c0ab123456789999',
+      dueDate: '2024-04-05',
+      notes: 'Grab fresh tortillas',
+      items: [
+        { name: 'Corn tortillas', quantity: 20, unit: 'pieces', checked: false },
+        { name: 'Pineapple', quantity: 1, unit: 'pc', checked: true }
+      ]
+    },
+    NewShoppingList: {
+      title: 'Weekend Groceries',
+      user: '661fa2d2c0ab123456789999',
+      dueDate: '2024-05-01',
+      items: [
+        { name: 'Black beans', quantity: 2, unit: 'cans' },
+        { name: 'Queso fresco', quantity: 1, unit: 'pack' }
+      ],
+      notes: 'Check the spice drawer first.'
+    },
   },
 };
 
 const outputFile = './swagger-output.json';
-const endpointsFiles = ['./server.js'];
+const endpointsFiles = ['./app.js'];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

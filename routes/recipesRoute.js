@@ -1,5 +1,6 @@
 const express = require('express');
 const recipesController = require('../controllers/recipesController');
+const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -40,6 +41,7 @@ router.post(
   /* 
     #swagger.tags = ['Recipes']
     #swagger.summary = 'Create a new recipe'
+    #swagger.security = [{ OAuth2: [] }]
     #swagger.parameters['body'] = {
       in: 'body',
       required: true,
@@ -50,6 +52,7 @@ router.post(
       schema: { $ref: '#/definitions/Recipe' }
     }
   */
+  requireAuth,
   recipesController.createRecipe
 );
 
@@ -58,6 +61,7 @@ router.put(
   /* 
     #swagger.tags = ['Recipes']
     #swagger.summary = 'Update a recipe'
+    #swagger.security = [{ OAuth2: [] }]
     #swagger.parameters['id'] = {
       in: 'path',
       required: true,
@@ -74,6 +78,7 @@ router.put(
       schema: { $ref: '#/definitions/Recipe' }
     }
   */
+  requireAuth,
   recipesController.updateRecipe
 );
 
@@ -82,6 +87,7 @@ router.delete(
   /* 
     #swagger.tags = ['Recipes']
     #swagger.summary = 'Delete a recipe'
+    #swagger.security = [{ OAuth2: [] }]
     #swagger.parameters['id'] = {
       in: 'path',
       required: true,
@@ -92,6 +98,7 @@ router.delete(
       description: 'Recipe removed successfully'
     }
   */
+  requireAuth,
   recipesController.deleteRecipe
 );
 

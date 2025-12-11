@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
-const connectDb = async () => {
-  const uri = process.env.MONGODB_URI;
+const connectDb = async (uriOverride, options = {}) => {
+  const uri = uriOverride || process.env.MONGODB_URI;
 
   if (!uri) {
     throw new Error('Missing MONGODB_URI in environment variables');
@@ -9,7 +9,7 @@ const connectDb = async () => {
 
   try {
     await mongoose.connect(uri, {
-      dbName: process.env.DB_NAME || 'MealMosaic',
+      dbName: options.dbName || process.env.DB_NAME || 'MealMosaic',
     });
     console.log('✅ Connected to MongoDB');
   } catch (error) {

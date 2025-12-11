@@ -25,11 +25,10 @@ const mealPlanSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-mealPlanSchema.pre('validate', function ensureDateOrder(next) {
+mealPlanSchema.pre('validate', function ensureDateOrder() {
   if (this.startDate && this.endDate && this.endDate < this.startDate) {
     this.invalidate('endDate', 'endDate must be on or after startDate');
   }
-  next();
 });
 
 module.exports = mongoose.model('MealPlan', mealPlanSchema);

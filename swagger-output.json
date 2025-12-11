@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Meal Mosaic API",
-    "description": "CRUD API for recipes and meal plans (Final Project Part 1, CSE341)",
+    "description": "CRUD API for recipes, meal plans, users, and shopping lists with GitHub OAuth (Final Project)",
     "version": "1.0.0"
   },
   "host": "localhost:8080",
@@ -10,6 +10,17 @@
   "schemes": [
     "http"
   ],
+  "securityDefinitions": {
+    "OAuth2": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://github.com/login/oauth/authorize",
+      "tokenUrl": "https://github.com/login/oauth/access_token",
+      "scopes": {
+        "user:email": "Read user email"
+      }
+    }
+  },
   "consumes": [
     "application/json"
   ],
@@ -23,6 +34,75 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/github": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Start GitHub OAuth login",
+        "description": "",
+        "responses": {
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/auth/github/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "GitHub OAuth callback",
+        "description": "",
+        "responses": {
+          "503": {
+            "description": "Service Unavailable"
+          }
+        }
+      }
+    },
+    "/auth/failure": {
+      "get": {
+        "description": "",
+        "responses": {
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "End session",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Get current authenticated user",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -78,10 +158,18 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
       }
     },
     "/recipes/{id}": {
@@ -151,13 +239,21 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -181,13 +277,21 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
       }
     },
     "/meal-plans/": {
@@ -241,10 +345,18 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
       }
     },
     "/meal-plans/{id}": {
@@ -314,13 +426,21 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "404": {
             "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
       },
       "delete": {
         "tags": [
@@ -344,6 +464,117 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Retrieve all users",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "A list of users",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Create a new user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewUser"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The created user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Retrieve a single user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User that matches the provided id",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
           "404": {
             "description": "Not Found"
           },
@@ -351,6 +582,283 @@
             "description": "Internal Server Error"
           }
         }
+      },
+      "put": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Update a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the user"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewUser"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated user",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Delete a user",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the user"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User removed successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
+      }
+    },
+    "/shopping-lists/": {
+      "get": {
+        "tags": [
+          "Shopping Lists"
+        ],
+        "summary": "Retrieve all shopping lists",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Shopping lists",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ShoppingList"
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Shopping Lists"
+        ],
+        "summary": "Create a new shopping list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewShoppingList"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The created shopping list",
+            "schema": {
+              "$ref": "#/definitions/ShoppingList"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
+      }
+    },
+    "/shopping-lists/{id}": {
+      "get": {
+        "tags": [
+          "Shopping Lists"
+        ],
+        "summary": "Retrieve a single shopping list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the shopping list"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Shopping list that matches the provided id",
+            "schema": {
+              "$ref": "#/definitions/ShoppingList"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Shopping Lists"
+        ],
+        "summary": "Update a shopping list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the shopping list"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/NewShoppingList"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated shopping list",
+            "schema": {
+              "$ref": "#/definitions/ShoppingList"
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Shopping Lists"
+        ],
+        "summary": "Delete a shopping list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "MongoDB identifier for the shopping list"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Shopping list removed successfully"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        },
+        "security": [
+          {
+            "OAuth2": []
+          }
+        ]
       }
     }
   },
@@ -393,15 +901,15 @@
             "properties": {
               "name": {
                 "type": "string",
-                "example": "Achiote paste"
+                "example": "Corn tortillas"
               },
               "quantity": {
                 "type": "number",
-                "example": 2
+                "example": 12
               },
               "unit": {
                 "type": "string",
-                "example": "tbsp"
+                "example": "pieces"
               }
             }
           }
@@ -484,15 +992,15 @@
             "properties": {
               "name": {
                 "type": "string",
-                "example": "Salsa verde"
+                "example": "Queso fresco"
               },
               "quantity": {
                 "type": "number",
-                "example": 2
+                "example": 4
               },
               "unit": {
                 "type": "string",
-                "example": "cups"
+                "example": "oz"
               }
             }
           }
@@ -545,6 +1053,48 @@
         }
       }
     },
+    "User": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "661fa2d2c0ab123456789999"
+        },
+        "username": {
+          "type": "string",
+          "example": "chef-lalo"
+        },
+        "email": {
+          "type": "string",
+          "example": "lalo@example.com"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "example": "https://avatars.githubusercontent.com/u/123456?v=4"
+        },
+        "githubId": {
+          "type": "string",
+          "example": "123456"
+        }
+      }
+    },
+    "NewUser": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "chef-lalo"
+        },
+        "email": {
+          "type": "string",
+          "example": "lalo@example.com"
+        },
+        "avatarUrl": {
+          "type": "string",
+          "example": "https://avatars.githubusercontent.com/u/123456?v=4"
+        }
+      }
+    },
     "MealPlan": {
       "type": "object",
       "properties": {
@@ -575,11 +1125,11 @@
             "properties": {
               "date": {
                 "type": "string",
-                "example": "2024-04-02"
+                "example": "2024-04-03"
               },
               "mealType": {
                 "type": "string",
-                "example": "lunch"
+                "example": "dinner"
               },
               "recipe": {
                 "type": "string",
@@ -587,7 +1137,7 @@
               },
               "notes": {
                 "type": "string",
-                "example": "Pack leftovers"
+                "example": "Serve with lime and salsa verde"
               }
             }
           }
@@ -640,6 +1190,117 @@
         "notes": {
           "type": "string",
           "example": "Street-food themed dinners."
+        }
+      }
+    },
+    "ShoppingItem": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Lime"
+        },
+        "quantity": {
+          "type": "number",
+          "example": 6
+        },
+        "unit": {
+          "type": "string",
+          "example": "pieces"
+        },
+        "checked": {
+          "type": "boolean",
+          "example": false
+        }
+      }
+    },
+    "ShoppingList": {
+      "type": "object",
+      "properties": {
+        "_id": {
+          "type": "string",
+          "example": "6630bd5ac0ab123456789ace"
+        },
+        "title": {
+          "type": "string",
+          "example": "Taco Night Prep"
+        },
+        "user": {
+          "type": "string",
+          "example": "661fa2d2c0ab123456789999"
+        },
+        "dueDate": {
+          "type": "string",
+          "example": "2024-04-05"
+        },
+        "notes": {
+          "type": "string",
+          "example": "Grab fresh tortillas"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Pineapple"
+              },
+              "quantity": {
+                "type": "number",
+                "example": 1
+              },
+              "unit": {
+                "type": "string",
+                "example": "pc"
+              },
+              "checked": {
+                "type": "boolean",
+                "example": true
+              }
+            }
+          }
+        }
+      }
+    },
+    "NewShoppingList": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Weekend Groceries"
+        },
+        "user": {
+          "type": "string",
+          "example": "661fa2d2c0ab123456789999"
+        },
+        "dueDate": {
+          "type": "string",
+          "example": "2024-05-01"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "example": "Queso fresco"
+              },
+              "quantity": {
+                "type": "number",
+                "example": 1
+              },
+              "unit": {
+                "type": "string",
+                "example": "pack"
+              }
+            }
+          }
+        },
+        "notes": {
+          "type": "string",
+          "example": "Check the spice drawer first."
         }
       }
     }

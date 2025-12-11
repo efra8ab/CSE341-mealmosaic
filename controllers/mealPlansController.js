@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const MealPlan = require('../models/mealPlan');
 const Recipe = require('../models/recipe');
+const User = require('../models/user');
 
 const REQUIRED_FIELDS = ['title', 'user', 'startDate', 'endDate', 'entries'];
 const VALID_MEAL_TYPES = ['breakfast', 'lunch', 'dinner', 'snack'];
@@ -46,6 +47,19 @@ const ensureRecipesExist = async (entries = []) => {
   const foundCount = await Recipe.countDocuments({ _id: { $in: recipeIds } });
   if (foundCount !== recipeIds.length) {
     return { ok: false, status: 404, message: 'One or more recipe references were not found' };
+  }
+
+  return { ok: true };
+};
+
+const ensureUserExists = async (userId) => {
+  if (!mongoose.isValidObjectId(userId)) {
+    return { ok: false, status: 400, message: 'user must be a valid id' };
+  }
+
+  const exists = await User.exists({ _id: userId });
+  if (!exists) {
+    return { ok: false, status: 404, message: 'Referenced user not found' };
   }
 
   return { ok: true };
@@ -98,6 +112,11 @@ const createMealPlan = async (req, res) => {
     return res.status(400).json({ message: entriesIssue });
   }
 
+  const userCheck = await ensureUserExists(req.body.user);
+  if (!userCheck.ok) {
+    return res.status(userCheck.status).json({ message: userCheck.message });
+  }
+
   const recipeCheck = await ensureRecipesExist(req.body.entries);
   if (!recipeCheck.ok) {
     return res.status(recipeCheck.status).json({ message: recipeCheck.message });
@@ -145,6 +164,11 @@ const updateMealPlan = async (req, res) => {
   const entriesIssue = validateEntries(req.body.entries);
   if (entriesIssue) {
     return res.status(400).json({ message: entriesIssue });
+  }
+
+  const userCheck = await ensureUserExists(req.body.user);
+  if (!userCheck.ok) {
+    return res.status(userCheck.status).json({ message: userCheck.message });
   }
 
   const recipeCheck = await ensureRecipesExist(req.body.entries);

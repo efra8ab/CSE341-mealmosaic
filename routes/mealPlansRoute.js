@@ -1,5 +1,6 @@
 const express = require('express');
 const mealPlansController = require('../controllers/mealPlansController');
+const { requireAuth } = require('../middleware/auth');
 
 const router = express.Router();
 
@@ -40,6 +41,7 @@ router.post(
   /* 
     #swagger.tags = ['Meal Plans']
     #swagger.summary = 'Create a new meal plan'
+    #swagger.security = [{ OAuth2: [] }]
     #swagger.parameters['body'] = {
       in: 'body',
       required: true,
@@ -50,6 +52,7 @@ router.post(
       schema: { $ref: '#/definitions/MealPlan' }
     }
   */
+  requireAuth,
   mealPlansController.createMealPlan
 );
 
@@ -58,6 +61,7 @@ router.put(
   /* 
     #swagger.tags = ['Meal Plans']
     #swagger.summary = 'Update a meal plan'
+    #swagger.security = [{ OAuth2: [] }]
     #swagger.parameters['id'] = {
       in: 'path',
       required: true,
@@ -74,6 +78,7 @@ router.put(
       schema: { $ref: '#/definitions/MealPlan' }
     }
   */
+  requireAuth,
   mealPlansController.updateMealPlan
 );
 
@@ -82,6 +87,7 @@ router.delete(
   /* 
     #swagger.tags = ['Meal Plans']
     #swagger.summary = 'Delete a meal plan'
+    #swagger.security = [{ OAuth2: [] }]
     #swagger.parameters['id'] = {
       in: 'path',
       required: true,
@@ -92,6 +98,7 @@ router.delete(
       description: 'Meal plan removed successfully'
     }
   */
+  requireAuth,
   mealPlansController.deleteMealPlan
 );
 
