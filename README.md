@@ -2,6 +2,9 @@
 
 Recipes, Meal Plans, Users, and Shopping Lists with Express, MongoDB, Swagger docs at `/api-docs`, and GitHub OAuth to protect write routes.
 
+## Live landing
+- Root `/` now shows a quick visual landing with links to Swagger, GitHub login, and session check.
+
 ## Quickstart
 1. `npm install`
 2. Copy `.env.example` to `.env` and fill in `MONGODB_URI`, `SESSION_SECRET`, and OAuth values when ready.

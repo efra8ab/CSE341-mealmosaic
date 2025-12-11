@@ -7,6 +7,12 @@ GET {{baseUrl}}/auth/github
 ### Current session
 GET {{baseUrl}}/auth/me
 
+### Landing page
+GET {{baseUrl}}/
+
+### Swagger UI
+GET {{baseUrl}}/api-docs
+
 ### Get all recipes
 GET {{baseUrl}}/recipes
 

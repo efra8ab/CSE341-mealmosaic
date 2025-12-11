@@ -6,7 +6,8 @@ const port = process.env.PORT || 8080;
 const doc = {
   info: {
     title: 'Meal Mosaic API',
-    description: 'CRUD API for recipes, meal plans, users, and shopping lists with GitHub OAuth (Final Project)',
+    description:
+      'CRUD API for recipes, meal plans, users, and shopping lists with GitHub OAuth. Visit the landing page at `/` for quick links to login and Swagger UI.',
   },
   host: process.env.SWAGGER_HOST || `localhost:${port}`,
   basePath: '/',
